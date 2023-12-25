@@ -154,7 +154,7 @@ console.log("Model Name:" + MODEL_NAME)
 app.use(express.json({extended: true, limit: '1mb'}))
 app.use('/public', express.static('public'))
 
-app.all('/', (req, res) => {
+app.get('/', (req, res) => {
     console.log("Just got a request!")
     res.render('pages/index');
     //res.sendFile(process.env.RENDER_SRC_ROOT + '/index.ejs')

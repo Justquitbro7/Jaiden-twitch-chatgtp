@@ -239,3 +239,23 @@ function notifyFileChange() {
         }
     });
 }
+
+app.all('/continue/', (req, res) => {
+    console.log(last_user_message)
+    console.log("Just got a continue request!")
+    // Return the rest of the sliced answer from the last request
+    if (last_user_message.length > 0) {
+        let new_user_message = last_user_message
+        if (last_user_message.length > MAX_LENGTH){
+            console.log("Agent answer exceeds twitch chat limit. Slicing to first 399 characters.")
+            new_user_message = last_user_message.slice(0, MAX_LENGTH)
+        }
+        // save the other part of the message for the next response
+        last_user_message = last_user_message.slice(MAX_LENGTH)
+        console.log ("Sliced Agent answer: " + last_user_message)
+        res.send(new_user_message)
+    }
+    else {
+        res.send("No message to continue. Please send a new message first.")
+    }
+})

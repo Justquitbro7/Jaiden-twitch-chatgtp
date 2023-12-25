@@ -91,20 +91,6 @@ app.get('/gpt/:text', async (req, res) => {
     //The agent should receive Username:Message in the text to identify conversations with different users in his history.
     const text = req.params.text
 
-    // define function to check history length and perform bot response
-    const answer_question = async (answer) => {
-        if (answer.length > MAX_LENGTH) {
-            const messages = answer.match(new RegExp(`.{1,${MAX_LENGTH}}`, "g"));
-            messages.forEach((message, index) => {
-                setTimeout(() => {
-                    bot.say(channel, message);
-                }, 1000 * index);
-            });
-        } else {
-            bot.say(channel, answer);
-        }
-    }
-
     let answer = ""
     if (GPT_MODE === "CHAT") {
         //CHAT MODE EXECUTION

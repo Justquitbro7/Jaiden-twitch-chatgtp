@@ -22,10 +22,6 @@ let GPT_MODE = process.env.GPT_MODE
 let HISTORY_LENGTH = process.env.HISTORY_LENGTH
 let OPENAI_API_KEY = process.env.OPENAI_API_KEY
 let MODEL_NAME = process.env.MODEL_NAME
-let TWITCH_USER = process.env.TWITCH_USER
-let TWITCH_AUTH =  process.env.TWITCH_AUTH
-let COMMAND_NAME = process.env.COMMAND_NAME
-let CHANNELS = process.env.CHANNELS
 
 if (!GPT_MODE) {
     GPT_MODE = "CHAT"
@@ -39,101 +35,15 @@ if (!OPENAI_API_KEY) {
 if (!MODEL_NAME) {
     MODEL_NAME = "gpt-3.5-turbo"
 }
-if (!TWITCH_USER) {
-    TWITCH_USER = ""
-    console.log("No TWITCH_USER found.")
-}
-if (!TWITCH_AUTH) {
-    // https://dev.twitch.tv/console
-    // https://twitchapps.com/tmi/
-    TWITCH_AUTH = "oauth:"
-    console.log("No TWITCH_AUTH found.")
-}
-if (!COMMAND_NAME) {
-    COMMAND_NAME = "chat"
-}
-if (!CHANNELS) {
-    CHANNELS = [""]
-} else {
-    // split channels by comma into array
-    CHANNELS = CHANNELS.split(",")
-}
 
 // init global variables
 const MAX_LENGTH = 399
 let file_context = "You are a helpful Twitch Chatbot."
 let last_user_message = ""
 
-// setup twitch bot
-const channels = CHANNELS;
-const channel = channels[0];
-console.log("Channels: " + channels)
-
-const bot = new TwitchBot(TWITCH_USER, TWITCH_AUTH, channels);
-
 // setup openai operations
 file_context = fs.readFileSync("./file_context.txt", 'utf8');
 const openai_ops = new OpenAIOperations(file_context, OPENAI_API_KEY, MODEL_NAME, HISTORY_LENGTH);
-
-// setup twitch bot callbacks
-bot.onConnected((addr, port) => {
-    console.log(`* Connected to ${addr}:${port}`);
-
-    // join channels
-    channels.forEach(channel => {
-        console.log(`* Joining ${channel}`);
-        console.log(`* Saying hello in ${channel}`)
-    });
-});
-
-bot.onDisconnected((reason) => {
-    console.log(`Disconnected: ${reason}`);
-});
-
-// connect bot
-bot.connect(
-    () => {
-        console.log("Bot connected!");
-    },
-    (error) => {
-        console.log("Bot couldn't connect!");
-        console.log(error);
-    }
-);
-
-bot.onMessage(async (channel, user, message, self) => {
-    if (self) return;
-
-    // check if message is a command started with !COMMAND_NAME (e.g. !gpt)
-    if (message.startsWith("!" + COMMAND_NAME)) {
-        // get text
-        const text = message.slice(COMMAND_NAME.length + 1);
-
-        // make openai call
-        const response = await openai_ops.make_openai_call(text);
-
-        // split response if it exceeds twitch chat message length limit
-        // send multiples messages with a delay in between
-        if (response.length > MAX_LENGTH) {
-            const messages = response.match(new RegExp(`.{1,${MAX_LENGTH}}`, "g"));
-            messages.forEach((message, index) => {
-                setTimeout(() => {
-                    bot.say(channel, message);
-                }, 1000 * index);
-            });
-        } else {
-            bot.say(channel, response);
-            try {
-                console.log(user.username + ' - ' + user.userstate);
-                const ttsAudioUrl = await bot.sayTTS(channel, response, user.userstate);
-                // Notify clients about the file change
-                notifyFileChange(ttsAudioUrl);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-    }
-});
 
 app.ws('/check-for-updates', (ws, req) => {
   ws.on('message', (message) => {

@@ -46,8 +46,8 @@ if (!TWITCH_USER) {
 if (!TWITCH_AUTH) {
     // https://dev.twitch.tv/console
     // https://twitchapps.com/tmi/
-    TWITCH_AUTH = "oauth:5163bmrgfv8vi9vu4qql10rtv29ix4"
-    console.log("No TWITCH_AUTH found. Using taeyeon__ss auth as default.")
+    TWITCH_AUTH = ""
+    console.log("No TWITCH_AUTH found.")
 }
 if (!COMMAND_NAME) {
     COMMAND_NAME = "chat"

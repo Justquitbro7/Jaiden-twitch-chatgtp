@@ -22,12 +22,16 @@ let GPT_MODE = process.env.GPT_MODE
 let HISTORY_LENGTH = process.env.HISTORY_LENGTH
 let OPENAI_API_KEY = process.env.OPENAI_API_KEY
 let MODEL_NAME = process.env.MODEL_NAME
+let TWITCH_USER = process.env.TWITCH_USER
+let TWITCH_AUTH =  process.env.TWITCH_AUTH
+let COMMAND_NAME = process.env.COMMAND_NAME
+let CHANNELS = process.env.CHANNELS
 
 if (!GPT_MODE) {
     GPT_MODE = "CHAT"
 }
 if (!HISTORY_LENGTH) {
-    HISTORY_LENGTH = 5
+    HISTORY_LENGTH = 10
 }
 if (!OPENAI_API_KEY) {
     console.log("No OPENAI_API_KEY found. Please set it as environment variable.")
@@ -35,6 +39,21 @@ if (!OPENAI_API_KEY) {
 if (!MODEL_NAME) {
     MODEL_NAME = "gpt-3.5-turbo"
 }
+if (!TWITCH_USER) {
+    TWITCH_USER = ""
+    console.log("No TWITCH_USER found.")
+}
+if (!TWITCH_AUTH) {
+    // https://dev.twitch.tv/console
+    // https://twitchapps.com/tmi/
+    TWITCH_AUTH = "oauth:"
+    console.log("No TWITCH_AUTH found.")
+}
+if (!COMMAND_NAME) {
+    COMMAND_NAME = "chat"
+}
+if (!CHANNELS) {
+    CHANNELS = [""]
 } else {
     // split channels by comma into array
     CHANNELS = CHANNELS.split(",")
@@ -44,6 +63,13 @@ if (!MODEL_NAME) {
 const MAX_LENGTH = 399
 let file_context = "You are a helpful Twitch Chatbot."
 let last_user_message = ""
+
+// setup twitch bot
+const channels = CHANNELS;
+const channel = channels[0];
+console.log("Channels: " + channels)
+
+const bot = new TwitchBot(TWITCH_USER, TWITCH_AUTH, channels);
 
 // setup openai operations
 file_context = fs.readFileSync("./file_context.txt", 'utf8');

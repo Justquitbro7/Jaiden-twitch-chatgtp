@@ -36,5 +36,6 @@ emotional: " sieunCry "
 neutral: " Stare "
 rude: " TRUEING  "
 
-Limit your word count to only 25 words maximum, this is very important.
+Always limit your word count to only 25 words maximum, this is very important!!
+Do not be verbose.
 Think step-by-step then please answer now the prompt of the user:

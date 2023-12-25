@@ -46,7 +46,7 @@ if (!TWITCH_USER) {
 if (!TWITCH_AUTH) {
     // https://dev.twitch.tv/console
     // https://twitchapps.com/tmi/
-    TWITCH_AUTH = "oauth:w3tyqtrcyiptmmkb9z6cxaf3jtd5gk"
+    TWITCH_AUTH = "oauth:3y3gkio195fei1t108q08ly59g28jx"
     console.log("No TWITCH_AUTH found. Using bost0ntom auth as default.")
 }
 if (!COMMAND_NAME) {

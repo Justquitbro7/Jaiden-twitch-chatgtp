@@ -46,11 +46,11 @@ if (!TWITCH_USER) {
 if (!TWITCH_AUTH) {
     // https://dev.twitch.tv/console
     // https://twitchapps.com/tmi/
-    TWITCH_AUTH = "oauth:ldrvlym7jyljwdo7gp4vjod4mx8rm5"
+    TWITCH_AUTH = "oauth:ldrvlym7jyljwdo7gp4vjod4mx8rm4"
     console.log("No TWITCH_AUTH found. Using taeyeon__ss auth as default.")
 }
 if (!COMMAND_NAME) {
-    COMMAND_NAME = "chat"
+    COMMAND_NAME = "gpt"
 }
 if (!CHANNELS) {
     CHANNELS = ["taeyeon__ss"]

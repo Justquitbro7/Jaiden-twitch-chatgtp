@@ -40,8 +40,8 @@ if (!MODEL_NAME) {
     MODEL_NAME = "gpt-3.5-turbo"
 }
 if (!TWITCH_USER) {
-    TWITCH_USER = "bost0ntom"
-    console.log("No TWITCH_USER found. Using bost0ntom as default.")
+    TWITCH_USER = "SEGPT"
+    console.log("No TWITCH_USER found. Using SEGPT as default.")
 }
 if (!TWITCH_AUTH) {
     // https://dev.twitch.tv/console

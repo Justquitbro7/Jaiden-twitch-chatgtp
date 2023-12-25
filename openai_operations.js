@@ -32,9 +32,9 @@ export class OpenAIOperations {
             const response = await this.openai.chat.completions.create({
                 model: this.model_name,
                 messages: this.messages,
-                temperature: 1,
+                temperature: 0.7,
                 max_tokens: 256,
-                top_p: 1,
+                top_p: 0.95,
                 frequency_penalty: 0,
                 presence_penalty: 0,
             });
@@ -61,9 +61,9 @@ export class OpenAIOperations {
             const response = await this.openai.completions.create({
               model: "text-davinci-003",
               prompt: text,
-              temperature: 1,
+              temperature: 0.7,
               max_tokens: 256,
-              top_p: 1,
+              top_p: 0.95,
               frequency_penalty: 0,
               presence_penalty: 0,
             });

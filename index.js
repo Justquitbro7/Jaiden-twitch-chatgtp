@@ -46,8 +46,8 @@ if (!TWITCH_USER) {
 if (!TWITCH_AUTH) {
     // https://dev.twitch.tv/console
     // https://twitchapps.com/tmi/
-    TWITCH_AUTH = "oauth:ldrvlym7jyljwdo7gp4vjod4mx8rm4"
-    console.log("No TWITCH_AUTH found. Using taeyeon__ss auth as default.")
+    TWITCH_AUTH = "oauth:w3tyqtrcyiptmmkb9z6cxaf3jtd5gk"
+    console.log("No TWITCH_AUTH found. Using bost0ntom auth as default.")
 }
 if (!COMMAND_NAME) {
     COMMAND_NAME = "gpt"

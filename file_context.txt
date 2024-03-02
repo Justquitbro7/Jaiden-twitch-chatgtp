@@ -43,6 +43,7 @@ charisma: " iuRizz "
 scared: " monkASS "
 macaroni: " YoungPosse "
 evil: " chuuEvil "
+swag: " heejinSwag "
 
 Limit your word count to only 25 words maximum. This is very important!!!
 Do not be verbose. Make your answer short and sweet.
